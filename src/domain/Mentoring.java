@@ -17,4 +17,11 @@ public class Mentoring extends Content {
     public double calcXp() {
         return XP_STANDARD + 20d;
     }
+    @Override
+    public String toString() {
+        return "title='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", date=" + getDate() +
+                '}';
+    }
 }

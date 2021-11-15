@@ -2,6 +2,7 @@ package domain;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Dev {
@@ -10,15 +11,25 @@ public class Dev {
     private Set<Content> finishContent = new LinkedHashSet<>();
 
     public void subscriberBootCamp(BootCamp bootCamp) {
-
+        this.subscriberContent.addAll(bootCamp.getContents());
+        bootCamp.getSubscriberDevs().add(this);
     }
 
     public void progress() {
-
+        Optional<Content> content = this.subscriberContent.stream()
+                .findFirst();
+        if (content.isPresent()) {
+            this.finishContent.add(content.get());
+            this.subscriberContent.add(content.get());
+        } else {
+            System.out.println("you not subscriber in none content ");
+        }
     }
 
-    public void calcTotalXp() {
-
+    public double calcTotalXp() {
+        return this.finishContent.stream()
+                .mapToDouble(Content::calcXp)
+                .sum();
     }
 
     public String getName() {
